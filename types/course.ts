@@ -21,7 +21,7 @@ export type ContentBlock =
   | { type: "heading"; text: string }
   | { type: "info"; title?: string; items: string[] }
   | { type: "code"; title?: string; code: string }
-  | { type: "output"; lines: string[] };
+  | { type: "output"; title?: string; lines: string[] };
 
 export interface Exercise {
   instruction: string;

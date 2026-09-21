@@ -24,8 +24,8 @@ Fases en orden de prioridad (según `PROJECT.md` §17):
 
 | Fase | Descripción | Estado |
 | ---- | ----------- | ------ |
-| 0 | Configuración base del proyecto | En progreso |
-| 1 | Datos y contenido del curso | Pendiente |
+| 0 | Configuración base del proyecto | Completada |
+| 1 | Datos y contenido del curso | En progreso |
 | 2 | Editor y ejecución de código | Pendiente |
 | 3 | Ejercicios y validación | Pendiente |
 | 4 | Navegación y layout | Pendiente |
@@ -55,7 +55,7 @@ Fases en orden de prioridad (según `PROJECT.md` §17):
   - `/cursos/[cursoSlug]` → vista de curso con temario.
   - `/cursos/[cursoSlug]/lecciones/[slug]` → vista de lección.
 - [x] Ejecutar `npm run lint` y `npm run build` sin errores al final de la fase.
-- [ ] Commit de la fase.
+- [x] Commit de la fase (`be9fbac`).
 
 ---
 
@@ -78,11 +78,11 @@ Fases en orden de prioridad (según `PROJECT.md` §17):
   9. Scope y conceptos importantes;
   10. DOM;
   11. Proyecto final.
-- [ ] Redactar el contenido educativo del curso (estructura de lección según `PROJECT.md` §7 y `FRONTEND.md` §27):
+- [x] Redactar el contenido educativo del curso (estructura de lección según `PROJECT.md` §7 y `FRONTEND.md` §27):
   - título, introducción breve, explicación, ejemplos con código, resultado esperado, ejercicio.
-- [ ] Definir los ejercicios de cada lección con instrucciones claras, código inicial y criterios de validación (`PROJECT.md` §10).
-- [ ] Documentar el contenido completo en `CURRICULUM.md` (referenciado por `PROJECT.md` §6) o mantenerlo como fuente de datos si se decide lo contrario (registrar decisión en `DECISIONS.md`).
-- [ ] Renderizar la lección a partir de los datos:
+- [x] Definir los ejercicios de cada lección con instrucciones claras, código inicial y criterios de validación (`PROJECT.md` §10).
+- [x] Documentar el contenido completo en `CURRICULUM.md` (referenciado por `PROJECT.md` §6) o mantenerlo como fuente de datos si se decide lo contrario (registrar decisión en `DECISIONS.md`).
+- [x] Renderizar la lección a partir de los datos:
   - bloques de información (puntos clave) con fondo verde muy claro (`FRONTEND.md` §11);
   - bloques de código estático con números de línea, highlighting y botón copiar discreto (`FRONTEND.md` §12);
   - texto normal directamente sobre fondo blanco (sin tarjetas innecesarias).

@@ -19,6 +19,9 @@
 
   --warning: #d69e2e;
   --error: #d64545;
+
+  --terminal: #1b211e;
+  --terminal-text: #e8f6f1;
 }
 
 @theme inline {
@@ -41,6 +44,9 @@
   --color-success: var(--primary);
   --color-warning: var(--warning);
   --color-error: var(--error);
+
+  --color-terminal: var(--terminal);
+  --color-terminal-text: var(--terminal-text);
 
   --font-sans: var(--font-inter);
   --font-mono: var(--font-jetbrains-mono);
