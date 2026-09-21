@@ -61,12 +61,12 @@ Fases en orden de prioridad (según `PROJECT.md` §17):
 
 ## 4. Fase 1 — Datos y contenido del curso
 
-- [ ] Definir tipos TypeScript del dominio:
+- [x] Definir tipos TypeScript del dominio:
   - `Course` (slug, título, descripción, barra de progreso global);
   - `Lesson` (slug, número, título, contenido, ejemplos, ejercicio, estado);
   - `Exercise` (instrucciones, código inicial, validación);
   - `CodeBlock` / `InfoBlock` (bloques de contenido).
-- [ ] Crear los datos del curso "Fundamentos de Programación con JavaScript" con las 11 lecciones del temario (`PROJECT.md` §6):
+- [x] Crear los datos del curso "Fundamentos de Programación con JavaScript" con las 11 lecciones del temario (`PROJECT.md` §6):
   1. Introducción a la programación;
   2. Variables y tipos de datos;
   3. Operadores;
