@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { buttonStyles } from "@/components/ui/button";
 import type { ConsoleEntry } from "@/lib/use-javascript-runner";
 
 interface ConsoleProps {
@@ -27,13 +26,16 @@ export default function Console({ entries, onClear }: ConsoleProps) {
           type="button"
           onClick={onClear}
           disabled={entries.length === 0}
-          className={buttonStyles({ variant: "ghost", size: "sm" })}
+          className="h-8 cursor-pointer px-3 text-xs font-medium text-terminal-text/60 transition-colors hover:text-terminal-text focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-terminal-text disabled:cursor-not-allowed disabled:opacity-40"
         >
           Limpiar
         </button>
       </div>
       <div
         ref={scrollRef}
+        role="log"
+        aria-label="Salida de la consola"
+        aria-live="polite"
         className="h-36 overflow-auto px-4 pb-4 font-mono text-sm leading-6"
       >
         {entries.length === 0 ? (

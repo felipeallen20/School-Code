@@ -58,7 +58,7 @@ export default function CodeEditor({
   }
 
   return (
-    <div className="relative overflow-hidden bg-surface" style={{ height }}>
+    <div className="relative overflow-hidden bg-surface focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary/40" style={{ height }}>
       <textarea
         ref={textareaRef}
         value={value}

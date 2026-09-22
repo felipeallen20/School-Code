@@ -66,6 +66,7 @@ export default function CourseLayout({
               <button
                 type="button"
                 onClick={() => setOpen(false)}
+                autoFocus
                 className={buttonStyles({ variant: "ghost", size: "sm" })}
               >
                 Cerrar

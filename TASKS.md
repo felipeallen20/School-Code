@@ -30,7 +30,7 @@ Fases en orden de prioridad (según `PROJECT.md` §17):
 | 3 | Ejercicios y validación | Completada |
 | 4 | Navegación y layout | Completada |
 | 5 | Progreso | Completada |
-| 6 | Diseño, accesibilidad y QA | Pendiente |
+| 6 | Diseño, accesibilidad y QA | Completada |
 | 7 | Documentación del proyecto | Pendiente |
 
 ---
@@ -190,22 +190,22 @@ Fases en orden de prioridad (según `PROJECT.md` §17):
 
 ## 9. Fase 6 — Diseño, accesibilidad y QA
 
-- [ ] Revisar la regla de consistencia (`FRONTEND.md` §30): reutilizar componentes existentes, no crear variantes visuales innecesarias.
-- [ ] Estados de UI completos en cada componente interactivo: default, hover, active, focus, disabled, loading, success, error (`FRONTEND.md` §24).
-- [ ] Accesibilidad (`FRONTEND.md` §23):
+- [x] Revisar la regla de consistencia (`FRONTEND.md` §30): reutilizar componentes existentes, no crear variantes visuales innecesarias.
+- [x] Estados de UI completos en cada componente interactivo: default, hover, active, focus, disabled, loading, success, error (`FRONTEND.md` §24).
+- [x] Accesibilidad (`FRONTEND.md` §23):
   - focus visible;
   - navegación por teclado;
   - labels apropiados;
   - contraste suficiente;
   - áreas de clic cómodas.
-- [ ] Animaciones mínimas 150–250ms, solo hover/transiciones/aparición de feedback (`FRONTEND.md` §25).
-- [ ] Verificar que el editor conserve legibilidad en todas las pantallas (`FRONTEND.md` §26).
-- [ ] No introducir gamificación (sin monedas, XP, rachas, recompensas) (`FRONTEND.md` §29, `PROJECT.md` §11).
-- [ ] Prueba manual del flujo completo MVP:
+- [x] Animaciones mínimas 150–250ms, solo hover/transiciones/aparición de feedback (`FRONTEND.md` §25).
+- [x] Verificar que el editor conserve legibilidad en todas las pantallas (`FRONTEND.md` §26).
+- [x] No introducir gamificación (sin monedas, XP, rachas, recompensas) (`FRONTEND.md` §29, `PROJECT.md` §11).
+- [x] Prueba manual del flujo completo MVP:
   - entrar al curso → leer lección → ver ejemplo → ejecutar → resolver ejercicio → feedback → avanzar → ver progreso.
-- [ ] Revisar responsive en desktop, laptop, tablet y móvil.
-- [ ] Ejecutar `npm run lint` y `npm run build` sin errores.
-- [ ] Commit final de la fase.
+- [x] Revisar responsive en desktop, laptop, tablet y móvil.
+- [x] Ejecutar `npm run lint` y `npm run build` sin errores.
+- [x] Commit final de la fase.
 
 ---
 

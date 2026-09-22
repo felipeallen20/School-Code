@@ -12,8 +12,9 @@ export default function Feedback({ result }: FeedbackProps) {
   if (result.success) {
     return (
       <div
+        key="success"
         role="status"
-        className="flex items-start gap-3 rounded-card border border-primary bg-primary-lighter p-4"
+        className="flex animate-[codelab-feedback-in_200ms_ease-out] items-start gap-3 rounded-card border border-primary bg-primary-lighter p-4"
       >
         <svg
           viewBox="0 0 20 20"
@@ -44,8 +45,9 @@ export default function Feedback({ result }: FeedbackProps) {
 
   return (
     <div
+      key="error"
       role="alert"
-      className="flex items-start gap-3 rounded-card border border-error bg-error/5 p-4"
+      className="flex animate-[codelab-feedback-in_200ms_ease-out] items-start gap-3 rounded-card border border-error bg-error/5 p-4"
     >
       <svg
         viewBox="0 0 20 20"
