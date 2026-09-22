@@ -108,3 +108,35 @@ asíncrono; solo el proxy de `console` y la captura de rechazos.
 **Consecuencias:** Un `await` dentro del código funciona sin configuración
 adicional. La ejecución "termina" (`done`) en el momento del flujo síncrono;
 las salidas asíncronas posteriores se agregan a la consola cuando ocurren.
+
+## D8: Resolución de validadores en el cliente
+
+**Decisión:** El componente `Exercise` busca el ejercicio haciendo `getCourseBySlug` /
+`getLessonBySlug` en el cliente (importando `data/courses`), en lugar de
+recibir el ejercicio como prop desde un Server Component.
+
+**Contexto:** El validador (`exercise.validate`) es una función y las
+funciones no son serializables entre un Server Component y un Client
+Component (`RSC`). El módulo de datos es TypeScript puro (sin API de Node),
+por lo que es seguro importarlo y ejecutarlo en el navegador.
+
+**Consecuencias:** Los datos del curso (incluidos los validadores) viajan en
+el bundle del cliente. El flujo es idéntico al de `Playground`: el código se
+ejecuta en el sandbox, se recoge la salida y `exercise.validate(code,
+output)` decide el resultado.
+
+## D9: Progreso persistido en localStorage
+
+**Decisión:** El progreso (lecciones completadas por curso) se guarda en
+`localStorage` bajo la clave `codelab-progress`, con la forma
+`{ [cursoSlug]: ["leccion-1", ...] }`. Un hook `useCourseProgress` expone
+`completed` y `complete`.
+
+**Contexto:** El MVP no tiene backend (`PROJECT.md` §14). La marca de
+"lección completada" al aprobar un ejercicio (Fase 3) se construye sobre
+esta base y se expondrá en sidebar/barra de progreso (Fase 5).
+
+**Consecuencias:** El progreso es solo local y por navegador; no hay
+sincronización entre dispositivos. No se muestra información de progreso
+persistida en el HTML inicial (evita discrepancias de hidratación); se lee al
+interactuar.

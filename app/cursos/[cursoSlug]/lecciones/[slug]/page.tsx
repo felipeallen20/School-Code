@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { getCourseBySlug, getLessonBySlug } from "@/data/courses";
 import LessonContent from "@/components/lesson/lesson-content";
 import Playground from "@/components/editor/playground";
+import Exercise from "@/components/editor/exercise";
 
 interface LessonPageProps {
   params: Promise<{ cursoSlug: string; slug: string }>;
@@ -46,10 +47,7 @@ export default async function LessonPage({ params }: LessonPageProps) {
         }
       />
       {lesson.exercise ? (
-        <p className="mt-10 rounded-card border border-border bg-surface p-4 text-sm text-text-secondary">
-          Esta lección incluye un ejercicio interactivo. Estará disponible
-          próximamente.
-        </p>
+        <Exercise courseSlug={course.slug} lessonSlug={lesson.slug} />
       ) : null}
     </main>
   );

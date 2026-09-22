@@ -27,6 +27,7 @@ Fases en orden de prioridad (según `PROJECT.md` §17):
 | 0 | Configuración base del proyecto | Completada |
 | 1 | Datos y contenido del curso | Completada |
 | 2 | Editor y ejecución de código | Completada |
+| 3 | Ejercicios y validación | Completada |
 | 2 | Editor y ejecución de código | Pendiente |
 | 3 | Ejercicios y validación | Pendiente |
 | 4 | Navegación y layout | Pendiente |
@@ -122,20 +123,20 @@ Fases en orden de prioridad (según `PROJECT.md` §17):
 
 ## 6. Fase 3 — Ejercicios y validación
 
-- [ ] Crear componente `Exercise` (`FRONTEND.md` §15):
+- [x] Crear componente `Exercise` (`FRONTEND.md` §15):
   - instrucciones muy claras;
   - editor;
   - botón "Ejecutar";
   - botón "Comprobar" (primary);
   - feedback inmediato.
-- [ ] Implementar validadores por ejercicio:
+- [x] Implementar validadores por ejercicio:
   - comprobar condiciones (no solo igualdad textual) para aceptar varias soluciones válidas (`PROJECT.md` §10);
   - estructura declarativa: variables requeridas, valores, salida esperada, etc.
-- [ ] Crear sistema de `Feedback` (`FRONTEND.md` §16):
+- [x] Crear sistema de `Feedback` (`FRONTEND.md` §16):
   - éxito (verde): "✓ ¡Correcto! ...";
   - error (rojo): "✕ Todavía no es correcto. Revisa ...";
   - advertencia (amarillo) solo cuando sea imprescindible.
-- [ ] Al aprobar un ejercicio, marcar la lección como completada.
+- [x] Al aprobar un ejercicio, marcar la lección como completada.
 - [ ] Commit de la fase.
 
 ---
