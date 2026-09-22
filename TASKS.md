@@ -28,9 +28,7 @@ Fases en orden de prioridad (según `PROJECT.md` §17):
 | 1 | Datos y contenido del curso | Completada |
 | 2 | Editor y ejecución de código | Completada |
 | 3 | Ejercicios y validación | Completada |
-| 2 | Editor y ejecución de código | Pendiente |
-| 3 | Ejercicios y validación | Pendiente |
-| 4 | Navegación y layout | Pendiente |
+| 4 | Navegación y layout | Completada |
 | 5 | Progreso | Pendiente |
 | 6 | Diseño, accesibilidad y QA | Pendiente |
 | 7 | Documentación del proyecto | Pendiente |
@@ -143,13 +141,13 @@ Fases en orden de prioridad (según `PROJECT.md` §17):
 
 ## 7. Fase 4 — Navegación y layout
 
-- [ ] Crear `Header` (`FRONTEND.md` §7):
+- [x] Crear `Header` (`FRONTEND.md` §7):
   - logo/nombre ("CodeLab");
   - navegación principal (Cursos, Progreso);
   - búsqueda (placeholder, puede ser visual);
   - acceso a perfil (placeholder);
   - fondo blanco, borde inferior sutil, ~60px, estable.
-- [ ] Crear `Sidebar` del curso (`FRONTEND.md` §8):
+- [x] Crear `Sidebar` del curso (`FRONTEND.md` §8):
   - curso actual;
   - barra de progreso + porcentaje;
   - temario completo;
@@ -157,19 +155,21 @@ Fases en orden de prioridad (según `PROJECT.md` §17):
     - actual → fondo verde muy claro + indicador verde + peso mayor;
     - completada → `✓` verde;
     - pendiente → `○`;
-    - bloqueada → candado discreto;
+    - bloqueada → candado discreto (en el MVP se decide navegación libre; el candado se evalúa con el orden de desbloqueo en Fase 5);
   - no solo color: usar también iconos/indicadores (`FRONTEND.md` §23).
-- [ ] Layout de 3 columnas en desktop (`FRONTEND.md` §6):
+- [x] Layout de 3 columnas en desktop (`FRONTEND.md` §6):
   - `Sidebar` (temario/progreso);
   - `Contenido` (lección, explicación, ejemplos);
   - `Área práctica` (editor, consola, ejercicio).
-- [ ] Navegación anterior/siguiente al final de la lección (`FRONTEND.md` §27):
+- [x] Navegación anterior/siguiente al final de la lección (`FRONTEND.md` §27):
   - "← Anterior" (secondary) y "Siguiente →" (primary);
   - "← Volver al curso" al inicio del contenido.
-- [ ] Responsive (`FRONTEND.md` §22):
+- [x] Responsive (`FRONTEND.md` §22):
   - tablet → reducir/reordenar áreas;
   - móvil → stack: Lección → Editor → Consola → Ejercicio; sidebar como drawer/menú desplegable;
   - nunca forzar 3 columnas en pantallas pequeñas.
+- [x] Página "Progreso" (`/progreso`) con resumen por curso usando el mismo store de progreso.
+- [x] Ejecutar `npm run lint` y `npm run build` sin errores.
 - [ ] Commit de la fase.
 
 ---
@@ -179,10 +179,10 @@ Fases en orden de prioridad (según `PROJECT.md` §17):
 - [ ] Modelar estado de progreso:
   - por lección: `locked` / `pending` / `in-progress` / `completed`;
   - desbloqueo de lecciones en orden o libre (decidir y consignar en `DECISIONS.md`).
-- [ ] Persistir el progreso en `localStorage` (sin backend en el MVP).
-- [ ] Mostrar barra de progreso (track gris claro, relleno verde, 6–8px, redondeada) y porcentaje (`FRONTEND.md` §9).
-- [ ] Propagación de estado: al completar una lección se actualizan sidebar, barra y navegación.
-- [ ] Diseñar para soportar múltiples cursos a futuro (estructura de datos por curso) sin implementarlos (`PROJECT.md` §13).
+- [x] Persistir el progreso en `localStorage` (sin backend en el MVP) — `codelab-progress` por curso, con store reactivo (`useSyncExternalStore`).
+- [x] Mostrar barra de progreso (track gris claro, relleno verde, 6–8px, redondeada) y porcentaje (`FRONTEND.md` §9).
+- [x] Propagación de estado: al completar una lección se actualizan sidebar, barra y navegación.
+- [x] Diseñar para soportar múltiples cursos a futuro (estructura de datos por curso) sin implementarlos (`PROJECT.md` §13) — página `/progreso` lista para iterar cursos.
 - [ ] Commit de la fase.
 
 ---

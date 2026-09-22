@@ -1,45 +1,68 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useSyncExternalStore } from "react";
 
-export const PROGRESS_STORAGE_KEY = "codelab-progress";
+const STORAGE_KEY = "codelab-progress";
+const PROGRESS_EVENT = "codelab-progress-changed";
 
 export type ProgressStore = Record<string, string[]>;
 
-function readStore(): ProgressStore {
-  if (typeof window === "undefined") return {};
+const listeners = new Set<() => void>();
+
+let cache: ProgressStore | null = null;
+
+function readLocalStorage(): ProgressStore {
   try {
-    const raw = window.localStorage.getItem(PROGRESS_STORAGE_KEY);
+    const raw = window.localStorage.getItem(STORAGE_KEY);
     return raw ? (JSON.parse(raw) as ProgressStore) : {};
   } catch {
     return {};
   }
 }
 
-export function getCompletedLessons(courseSlug: string): string[] {
-  return readStore()[courseSlug] ?? [];
+function getSnapshot(): ProgressStore {
+  if (cache === null) {
+    cache = typeof window === "undefined" ? {} : readLocalStorage();
+  }
+  return cache;
 }
 
-function persistStore(store: ProgressStore) {
-  if (typeof window === "undefined") return;
-  window.localStorage.setItem(PROGRESS_STORAGE_KEY, JSON.stringify(store));
+export { getSnapshot };
+
+function onExternalChange() {
+  cache = typeof window === "undefined" ? {} : readLocalStorage();
+  for (const listener of listeners) listener();
+}
+
+function subscribe(listener: () => void) {
+  listeners.add(listener);
+  window.addEventListener("storage", onExternalChange);
+  window.addEventListener(PROGRESS_EVENT, onExternalChange);
+  return () => {
+    listeners.delete(listener);
+    window.removeEventListener("storage", onExternalChange);
+    window.removeEventListener(PROGRESS_EVENT, onExternalChange);
+  };
+}
+
+export { subscribe };
+
+function persist(next: ProgressStore) {
+  cache = next;
+  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+  window.dispatchEvent(new Event(PROGRESS_EVENT));
 }
 
 export function useCourseProgress(courseSlug: string) {
-  const [completed, setCompleted] = useState<string[]>(() =>
-    getCompletedLessons(courseSlug),
-  );
+  const store = useSyncExternalStore(subscribe, getSnapshot, getSnapshot);
+  const completed = store[courseSlug] ?? [];
 
   const complete = useCallback(
     (lessonSlug: string) => {
-      setCompleted((prev) => {
-        if (prev.includes(lessonSlug)) return prev;
-        const next = [...prev, lessonSlug];
-        const store = readStore();
-        store[courseSlug] = next;
-        persistStore(store);
-        return next;
-      });
+      const current = getSnapshot();
+      const prev = current[courseSlug] ?? [];
+      if (prev.includes(lessonSlug)) return;
+      persist({ ...current, [courseSlug]: [...prev, lessonSlug] });
     },
     [courseSlug],
   );
