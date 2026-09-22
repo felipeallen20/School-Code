@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect, useRef } from "react";
+import { useMemo, useRef, useState } from "react";
 import { Highlight, themes } from "prism-react-renderer";
 import type { KeyboardEvent } from "react";
 
@@ -12,6 +12,9 @@ interface CodeEditorProps {
   height?: number;
 }
 
+const GUTTER_PADDING_LEFT = 16;
+const GUTTER_PADDING_RIGHT = 12;
+
 export default function CodeEditor({
   value,
   onChange,
@@ -21,18 +24,20 @@ export default function CodeEditor({
 }: CodeEditorProps) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const mirrorRef = useRef<HTMLDivElement>(null);
-  const gutterRef = useRef<HTMLDivElement>(null);
+  const [focused, setFocused] = useState(false);
 
   const lineCount = value.length === 0 ? 1 : value.split("\n").length;
-  const displayCode = value.length === 0 ? placeholder || "\n" : value;
+  const displayCode = value.length === 0 ? "\n" : value;
+  const digits = Math.max(1, String(lineCount).length);
+  const gutterWidth = `calc(${GUTTER_PADDING_LEFT}px + ${digits}ch + ${GUTTER_PADDING_RIGHT}px)`;
 
-  useLayoutEffect(() => {
-    const gutter = gutterRef.current;
-    const textarea = textareaRef.current;
-    if (gutter && textarea) {
-      textarea.style.paddingLeft = `${gutter.offsetWidth + 16}px`;
-    }
-  }, [lineCount, displayCode.length]);
+  const gutterLines = useMemo(
+    () =>
+      Array.from({ length: lineCount }, (_, index) => (
+        <span key={index}>{index + 1}</span>
+      )),
+    [lineCount],
+  );
 
   function syncScroll() {
     const textarea = textareaRef.current;
@@ -58,22 +63,29 @@ export default function CodeEditor({
   }
 
   return (
-    <div className="relative overflow-hidden bg-surface focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary/40" style={{ height }}>
+    <div className="relative overflow-hidden bg-surface" style={{ height }}>
       <textarea
         ref={textareaRef}
         value={value}
         onChange={(event) => onChange(event.target.value)}
         onScroll={syncScroll}
         onKeyDown={handleKeyDown}
+        onFocus={() => setFocused(true)}
+        onBlur={() => setFocused(false)}
         aria-label={label}
-        placeholder={placeholder}
+        placeholder={focused ? undefined : placeholder}
         spellCheck={false}
         autoCapitalize="off"
         autoComplete="off"
         autoCorrect="off"
         wrap="off"
         className="absolute inset-0 z-0 h-full w-full resize-none overflow-auto bg-transparent py-4 pr-4 font-mono text-sm leading-6 text-transparent caret-text outline-none placeholder:text-text-muted"
-        style={{ tabSize: 2, whiteSpace: "pre" }}
+        style={{
+          tabSize: 2,
+          whiteSpace: "pre",
+          paddingLeft: gutterWidth,
+          fontVariantLigatures: "none",
+        }}
       />
       <div
         aria-hidden="true"
@@ -82,16 +94,17 @@ export default function CodeEditor({
         <div ref={mirrorRef} className="h-full overflow-auto">
           <div className="flex w-max min-w-full">
             <div
-              ref={gutterRef}
               className="sticky left-0 z-10 flex shrink-0 flex-col bg-surface py-4 pl-4 pr-3 font-mono text-sm leading-6 text-text-muted select-none"
+              style={{ width: gutterWidth }}
             >
-              {Array.from({ length: lineCount }, (_, index) => (
-                <span key={index}>{index + 1}</span>
-              ))}
+              {gutterLines}
             </div>
             <Highlight theme={themes.github} code={displayCode} language="javascript">
               {({ tokens, getLineProps, getTokenProps }) => (
-                <pre className="py-4 pr-4 font-mono text-sm leading-6" style={{ tabSize: 2 }}>
+                <pre
+                  className="py-4 pr-4 font-mono text-sm leading-6"
+                  style={{ tabSize: 2, fontVariantLigatures: "none" }}
+                >
                   {tokens.map((line, index) => (
                     <div key={index} {...getLineProps({ line })}>
                       {line.map((token, key) => (
