@@ -25,7 +25,8 @@ Fases en orden de prioridad (según `PROJECT.md` §17):
 | Fase | Descripción | Estado |
 | ---- | ----------- | ------ |
 | 0 | Configuración base del proyecto | Completada |
-| 1 | Datos y contenido del curso | En progreso |
+| 1 | Datos y contenido del curso | Completada |
+| 2 | Editor y ejecución de código | Completada |
 | 2 | Editor y ejecución de código | Pendiente |
 | 3 | Ejercicios y validación | Pendiente |
 | 4 | Navegación y layout | Pendiente |
@@ -92,29 +93,29 @@ Fases en orden de prioridad (según `PROJECT.md` §17):
 
 ## 5. Fase 2 — Editor y ejecución de código
 
-- [ ] Crear componente `CodeEditor`:
+- [x] Crear componente `CodeEditor`:
   - números de línea;
   - syntax highlighting;
   - edición libre;
   - fuente monoespaciada legible;
   - scroll horizontal en líneas largas (`FRONTEND.md` §26);
   - nunca romper el código en pantallas pequeñas.
-- [ ] Implementar motor de ejecución de JavaScript en el navegador:
+- [x] Implementar motor de ejecución de JavaScript en el navegador:
   - capturar `console.log`, `console.error`, `console.warn` y otros métodos;
   - mostrar errores de JavaScript de forma comprensible (`FRONTEND.md` §13);
   - manejar `Promise`/`async` si se decide soportar (consignar en `DECISIONS.md`);
   - considerar un `iframe` sandbox sin acceso al DOM de la app o `new Function` con consola interceptada (decidir la opción segura en `DECISIONS.md`).
-- [ ] Crear componente `Console`:
+- [x] Crear componente `Console`:
   - apariencia de terminal (fondo oscuro aceptado, `FRONTEND.md` §14);
   - tipografía monoespaciada;
   - diferenciar errores;
   - scroll;
   - botón "Limpiar" discreto.
-- [ ] Crear componente `Playground`/`InteractiveEditor`:
+- [x] Crear componente `Playground`/`InteractiveEditor`:
   - editor + botón "Ejecutar" (botón primary verde);
   - consola debajo;
   - altura razonable (no ocupar toda la pantalla).
-- [ ] Conseguir el flujo completo: escribir → ejecutar → ver salida.
+- [x] Conseguir el flujo completo: escribir → ejecutar → ver salida.
 - [ ] Commit de la fase.
 
 ---

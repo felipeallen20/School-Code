@@ -71,3 +71,40 @@ nota que este es un MVP; la prioridad es tener contenido educativo
 versionable.
 
 **Consecuencias:** No hay CMS ni edición en vivo durante el MVP.
+
+## D6: Ejecución de código en iframe sandbox
+
+**Decisión:** El código del estudiante se ejecuta en un `<iframe>` con
+`sandbox="allow-scripts"` (sin `allow-same-origin`), creado con `srcdoc`
+por cada ejecución. La comunicación con la app se hace por `postMessage`.
+
+**Contexto:** Se descartó `new Function`/`eval` directo en la página porque
+daría acceso al DOM y al `window` de la aplicación. El iframe sandbox:
+
+- ejecuta en un entorno aislado, sin acceso al DOM de la app;
+- sin `allow-same-origin` tiene un origen opaco (sin red ni cookies);
+- sin `allow-modals` bloquea `alert`/`confirm`/`prompt`;
+
+El `sandboxDocument` generado inyecta un proxy sobre los métodos de
+`console`, envía `{ __codelab: true, type, text }` al padre y reporta un
+mensaje `done` al terminar la ejecución síncrona.
+
+**Consecuencias:** La ejecución es asíncrona desde el punto de vista de la
+app (hay que esperar el mensaje `done`). Cada "Ejecutar" recrea el entorno,
+por lo que el estado no persiste entre ejecuciones (aislamiento por diseño).
+
+## D7: Soporte de Promises/async en el sandbox
+
+**Decisión:** Se soportan `Promise`/`async` y temporizadores de forma
+natural: el iframe mantiene su propio event loop, por lo que los `console.*`
+emitidos de forma asíncrona se siguen capturando con el proxy instalado.
+Los rechazos no manejados se capturan con
+`window.addEventListener("unhandledrejection")` y se muestran como errores
+comprensibles.
+
+**Contexto:** El evaluador no necesita un tratamiento especial del código
+asíncrono; solo el proxy de `console` y la captura de rechazos.
+
+**Consecuencias:** Un `await` dentro del código funciona sin configuración
+adicional. La ejecución "termina" (`done`) en el momento del flujo síncrono;
+las salidas asíncronas posteriores se agregan a la consola cuando ocurren.

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getCourseBySlug, getLessonBySlug } from "@/data/courses";
 import LessonContent from "@/components/lesson/lesson-content";
+import Playground from "@/components/editor/playground";
 
 interface LessonPageProps {
   params: Promise<{ cursoSlug: string; slug: string }>;
@@ -34,6 +35,16 @@ export default async function LessonPage({ params }: LessonPageProps) {
       <div className="mt-6 border-t border-border pt-6">
         <LessonContent blocks={lesson.content} />
       </div>
+      <h2 className="mt-12 text-xl font-bold text-text">Experimenta</h2>
+      <p className="mt-2 text-sm text-text-secondary">
+        Modifica el código y ejecútalo para ver qué sucede.
+      </p>
+      <Playground
+        initialCode={
+          lesson.exercise?.initialCode ??
+          "// Escribe aquí tu código y presiona Ejecutar"
+        }
+      />
       {lesson.exercise ? (
         <p className="mt-10 rounded-card border border-border bg-surface p-4 text-sm text-text-secondary">
           Esta lección incluye un ejercicio interactivo. Estará disponible
