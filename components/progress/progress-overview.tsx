@@ -5,6 +5,7 @@ import Link from "next/link";
 import ProgressBar from "@/components/ui/progress-bar";
 import { buttonStyles } from "@/components/ui/button";
 import { courses } from "@/data/courses";
+import { arenas } from "@/data/arenas";
 import { subscribe, getSnapshot } from "@/lib/progress";
 
 export default function ProgressOverview() {
@@ -59,6 +60,37 @@ export default function ProgressOverview() {
                   />
                   <span className="text-sm text-text-secondary">
                     {completed.length} de {total} lecciones completadas
+                  </span>
+                </div>
+              </Link>
+            </li>
+          );
+        })}
+      </ul>
+
+      <h2 className="mt-12 text-xl font-bold text-text">Arenas</h2>
+      <ul className="mt-4 flex flex-col gap-4">
+        {arenas.map((arena) => {
+          const completed = store[arena.slug] ?? [];
+          const total = arena.challenges.length;
+          const percent = total ? Math.round((completed.length / total) * 100) : 0;
+          return (
+            <li key={arena.slug}>
+              <Link
+                href={`/arenas/${arena.slug}`}
+                className="flex flex-col gap-3 rounded-card border border-border bg-white p-5 transition-colors hover:border-border-strong hover:bg-surface"
+              >
+                <span className="text-base font-semibold text-text">
+                  {arena.title}
+                </span>
+                <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
+                  <ProgressBar
+                    value={percent}
+                    label={`Progreso de ${arena.title}: ${percent}%`}
+                    className="sm:max-w-xs"
+                  />
+                  <span className="text-sm text-text-secondary">
+                    {completed.length} de {total} retos completados
                   </span>
                 </div>
               </Link>

@@ -9,14 +9,22 @@ export type ProgressStore = Record<string, string[]>;
 
 export type LessonStatus = "locked" | "pending" | "in-progress" | "completed";
 
+export function getProgressStatus(
+  slug: string,
+  completed: string[],
+  currentSlug?: string,
+): LessonStatus {
+  if (completed.includes(slug)) return "completed";
+  if (slug === currentSlug) return "in-progress";
+  return "pending";
+}
+
 export function getLessonStatus(
   lessonSlug: string,
   completed: string[],
   currentSlug?: string,
 ): LessonStatus {
-  if (completed.includes(lessonSlug)) return "completed";
-  if (lessonSlug === currentSlug) return "in-progress";
-  return "pending";
+  return getProgressStatus(lessonSlug, completed, currentSlug);
 }
 
 const listeners = new Set<() => void>();
@@ -65,19 +73,27 @@ function persist(next: ProgressStore) {
   window.dispatchEvent(new Event(PROGRESS_EVENT));
 }
 
-export function useCourseProgress(courseSlug: string) {
+export function useProgressFor(storeKey: string) {
   const store = useSyncExternalStore(subscribe, getSnapshot, getSnapshot);
-  const completed = store[courseSlug] ?? [];
+  const completed = store[storeKey] ?? [];
 
   const complete = useCallback(
-    (lessonSlug: string) => {
+    (itemSlug: string) => {
       const current = getSnapshot();
-      const prev = current[courseSlug] ?? [];
-      if (prev.includes(lessonSlug)) return;
-      persist({ ...current, [courseSlug]: [...prev, lessonSlug] });
+      const prev = current[storeKey] ?? [];
+      if (prev.includes(itemSlug)) return;
+      persist({ ...current, [storeKey]: [...prev, itemSlug] });
     },
-    [courseSlug],
+    [storeKey],
   );
 
   return { completed, complete };
+}
+
+export function useCourseProgress(courseSlug: string) {
+  return useProgressFor(courseSlug);
+}
+
+export function useArenaProgress(arenaSlug: string) {
+  return useProgressFor(arenaSlug);
 }

@@ -3,57 +3,63 @@
 import Link from "next/link";
 import ProgressBar from "@/components/ui/progress-bar";
 import StatusIcon from "@/components/ui/status-icon";
-import { getLessonStatus, useCourseProgress } from "@/lib/progress";
-import { getCourseBySlug, getLessons } from "@/data/courses";
+import { getProgressStatus, useArenaProgress } from "@/lib/progress";
+import { getArenaBySlug, getChallenges } from "@/data/arenas";
 
-interface CourseSidebarProps {
-  courseSlug: string;
+interface ArenaSidebarProps {
+  arenaSlug: string;
   currentSlug?: string;
   onNavigate?: () => void;
 }
 
-export default function CourseSidebar({
-  courseSlug,
+export default function ArenaSidebar({
+  arenaSlug,
   currentSlug,
   onNavigate,
-}: CourseSidebarProps) {
-  const course = getCourseBySlug(courseSlug);
-  const lessons = course ? getLessons(course) : [];
-  const { completed } = useCourseProgress(courseSlug);
+}: ArenaSidebarProps) {
+  const arena = getArenaBySlug(arenaSlug);
+  const challenges = arena ? getChallenges(arena) : [];
+  const { completed } = useArenaProgress(arenaSlug);
 
-  if (!course) return null;
+  if (!arena) return null;
 
   const percent =
-    lessons.length > 0
-      ? Math.round((completed.length / lessons.length) * 100)
+    challenges.length > 0
+      ? Math.round((completed.length / challenges.length) * 100)
       : 0;
 
   return (
     <aside className="flex flex-col gap-6">
       <div>
-        <Link href={`/cursos/${course.slug}`} className="block">
+        <Link href={`/arenas/${arena.slug}`} className="block">
           <h2 className="text-base font-bold leading-snug text-text">
-            {course.title}
+            {arena.title}
           </h2>
         </Link>
         <div className="mt-4">
           <ProgressBar
             value={percent}
-            label={`Progreso del curso: ${percent}% completado`}
+            label={`Progreso de la arena: ${percent}% completado`}
           />
           <p className="mt-2 text-sm text-text-muted">{percent}% completado</p>
         </div>
       </div>
 
-      <nav aria-label="Temario del curso" className="flex flex-col gap-1">
+      <nav aria-label="Retos de la arena" className="flex flex-col gap-1">
         <p className="mb-1 px-3 text-xs font-semibold uppercase tracking-wider text-text-muted">
-          Temario
+          Retos
         </p>
-        {lessons.map((lesson) => {
-          const status = getLessonStatus(lesson.slug, completed, currentSlug);
+        {challenges.map((challenge) => {
+          const status = getProgressStatus(
+            challenge.slug,
+            completed,
+            currentSlug,
+          );
           const isCompleted = status === "completed";
           const isCurrent = status === "in-progress";
-          const label = isCompleted ? `${lesson.title} (completada)` : lesson.title;
+          const label = isCompleted
+            ? `${challenge.title} (completado)`
+            : challenge.title;
 
           const content = (
             <>
@@ -61,16 +67,21 @@ export default function CourseSidebar({
                 <StatusIcon status={status} />
               </span>
               <span className="font-mono text-xs text-text-muted">
-                {String(lesson.order).padStart(2, "0")}
+                {String(challenge.order).padStart(2, "0")}
               </span>
-              <span className="min-w-0 truncate">{lesson.title}</span>
+              <span className="min-w-0 flex-1 truncate">
+                {challenge.title}
+              </span>
+              <span className="shrink-0 font-mono text-[10px] capitalize text-text-muted">
+                {challenge.difficulty}
+              </span>
             </>
           );
 
           if (isCurrent) {
             return (
               <span
-                key={lesson.slug}
+                key={challenge.slug}
                 aria-current="page"
                 aria-label={label}
                 className="flex items-center gap-2 rounded-input bg-primary-light px-3 py-2 text-sm font-medium text-text"
@@ -82,8 +93,8 @@ export default function CourseSidebar({
 
           return (
             <Link
-              key={lesson.slug}
-              href={`/cursos/${course.slug}/lecciones/${lesson.slug}`}
+              key={challenge.slug}
+              href={`/arenas/${arena.slug}/retos/${challenge.slug}`}
               aria-label={label}
               onClick={onNavigate}
               className="flex items-center gap-2 rounded-input px-3 py-2 text-sm text-text-secondary transition-colors hover:bg-surface hover:text-text"
