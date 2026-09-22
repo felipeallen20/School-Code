@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { buttonStyles } from "@/components/ui/button";
+import CourseLogo from "@/components/ui/course-logo";
 import { getCourseBySlug, getLessons } from "@/data/courses";
 import CourseLayout from "@/components/course/course-layout";
 
@@ -22,8 +23,13 @@ export default async function CoursePage({ params }: CoursePageProps) {
   return (
     <CourseLayout courseSlug={course.slug}>
       <div className="px-4 pt-8 sm:px-0">
-        <p className="text-sm text-text-muted">Curso</p>
-        <h1 className="mt-2 text-3xl font-bold text-text">{course.title}</h1>
+        <div className="flex items-center gap-4">
+          <CourseLogo slug={course.slug} className="h-14 w-14 rounded-2xl" />
+          <div>
+            <p className="text-sm text-text-muted">Curso</p>
+            <h1 className="mt-1 text-3xl font-bold text-text">{course.title}</h1>
+          </div>
+        </div>
         <p className="mt-3 max-w-2xl text-base text-text-secondary">
           {course.description}
         </p>
