@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import ProgressBar from "@/components/ui/progress-bar";
-import { useCourseProgress } from "@/lib/progress";
+import { getLessonStatus, useCourseProgress } from "@/lib/progress";
 import { getCourseBySlug, getLessons } from "@/data/courses";
+import type { LessonStatus } from "@/lib/progress";
 
 interface CourseSidebarProps {
   courseSlug: string;
@@ -11,8 +12,8 @@ interface CourseSidebarProps {
   onNavigate?: () => void;
 }
 
-function StatusIcon({ completed, current }: { completed: boolean; current: boolean }) {
-  if (completed) {
+function StatusIcon({ status }: { status: LessonStatus }) {
+  if (status === "completed") {
     return (
       <svg
         viewBox="0 0 20 20"
@@ -28,7 +29,7 @@ function StatusIcon({ completed, current }: { completed: boolean; current: boole
       </svg>
     );
   }
-  if (current) {
+  if (status === "in-progress") {
     return <span aria-hidden="true" className="h-2 w-2 shrink-0 rounded-full bg-primary" />;
   }
   return (
@@ -77,14 +78,15 @@ export default function CourseSidebar({
           Temario
         </p>
         {lessons.map((lesson) => {
-          const isCurrent = lesson.slug === currentSlug;
-          const isCompleted = completed.includes(lesson.slug);
+          const status = getLessonStatus(lesson.slug, completed, currentSlug);
+          const isCompleted = status === "completed";
+          const isCurrent = status === "in-progress";
           const label = isCompleted ? `${lesson.title} (completada)` : lesson.title;
 
           const content = (
             <>
               <span className="flex w-4 shrink-0 justify-center">
-                <StatusIcon completed={isCompleted} current={isCurrent} />
+                <StatusIcon status={status} />
               </span>
               <span className="font-mono text-xs text-text-muted">
                 {String(lesson.order).padStart(2, "0")}

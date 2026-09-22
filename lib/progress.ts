@@ -7,6 +7,18 @@ const PROGRESS_EVENT = "codelab-progress-changed";
 
 export type ProgressStore = Record<string, string[]>;
 
+export type LessonStatus = "locked" | "pending" | "in-progress" | "completed";
+
+export function getLessonStatus(
+  lessonSlug: string,
+  completed: string[],
+  currentSlug?: string,
+): LessonStatus {
+  if (completed.includes(lessonSlug)) return "completed";
+  if (lessonSlug === currentSlug) return "in-progress";
+  return "pending";
+}
+
 const listeners = new Set<() => void>();
 
 let cache: ProgressStore | null = null;

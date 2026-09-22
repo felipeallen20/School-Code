@@ -29,7 +29,7 @@ Fases en orden de prioridad (según `PROJECT.md` §17):
 | 2 | Editor y ejecución de código | Completada |
 | 3 | Ejercicios y validación | Completada |
 | 4 | Navegación y layout | Completada |
-| 5 | Progreso | Pendiente |
+| 5 | Progreso | Completada |
 | 6 | Diseño, accesibilidad y QA | Pendiente |
 | 7 | Documentación del proyecto | Pendiente |
 
@@ -176,13 +176,14 @@ Fases en orden de prioridad (según `PROJECT.md` §17):
 
 ## 8. Fase 5 — Progreso
 
-- [ ] Modelar estado de progreso:
+- [x] Modelar estado de progreso:
   - por lección: `locked` / `pending` / `in-progress` / `completed`;
-  - desbloqueo de lecciones en orden o libre (decidir y consignar en `DECISIONS.md`).
+  - desbloqueo de lecciones en orden o libre (decidir y consignar en `DECISIONS.md`) — **navegación libre** (D10); `locked` modelado pero sin usar en el MVP.
 - [x] Persistir el progreso en `localStorage` (sin backend en el MVP) — `codelab-progress` por curso, con store reactivo (`useSyncExternalStore`).
 - [x] Mostrar barra de progreso (track gris claro, relleno verde, 6–8px, redondeada) y porcentaje (`FRONTEND.md` §9).
 - [x] Propagación de estado: al completar una lección se actualizan sidebar, barra y navegación.
 - [x] Diseñar para soportar múltiples cursos a futuro (estructura de datos por curso) sin implementarlos (`PROJECT.md` §13) — página `/progreso` lista para iterar cursos.
+- [x] Centralizar el modelo de estados en `getLessonStatus` (`lib/progress.ts`) para mantener la UI determinista.
 - [ ] Commit de la fase.
 
 ---

@@ -140,3 +140,26 @@ esta base y se expondrá en sidebar/barra de progreso (Fase 5).
 sincronización entre dispositivos. No se muestra información de progreso
 persistida en el HTML inicial (evita discrepancias de hidratación); se lee al
 interactuar.
+
+## D10: Navegación libre y modelo de estados por lección
+
+**Decisión:** Las lecciones no se bloquean en el MVP: el estudiante puede
+acceder a cualquier lección sin completar la anterior. Los estados por
+lección son:
+
+- `completed` → `✓` verde;
+- `in-progress` → lección actual (indicador verde + fondo verde muy claro);
+- `pending` → `○` (disponible y sin resolver);
+- `locked` → reservado para un futuro desbloqueo en orden; no se usa en el MVP.
+
+**Contexto:** `PROJECT.md` §11 dice que el progreso debe *orientar* al
+estudiante, no crear una mecánica de juego. La navegación libre ("seleccionar
+una lección, avanzar y regresar", `PROJECT.md` §12) da flexibilidad y evita
+frustración ante ejercicios difíciles. El estado `locked` queda modelado
+(`lib/progress.ts` → `getLessonStatus`) para permitir cambiar a desbloqueo
+secuencial sin rehacer la UI.
+
+**Consecuencias:** El sidebar muestra ○ / ✓ / lección actual; nunca candados
+en el MVP. El modelo de estados se centraliza en `getLessonStatus`, que recibe
+`lessonSlug`, las completadas y la lección actual, y devuelve el estado de
+forma determinista y testeable.
