@@ -327,7 +327,20 @@ if (nota >= 9) {
         },
         {
           type: "paragraph",
-          text: "Un bucle repite un bloque de código varias veces. El bucle for combina tres partes: inicializar un contador, definir la condición y actualizar el contador.",
+          text: "Un bucle ejecuta el mismo bloque de código varias veces sin tener que escribirlo repetidamente. Imagina que quieres mostrar los números del 1 al 3: en lugar de escribir tres veces console.log, le pides al programa que repita esa instrucción varias veces.",
+        },
+        {
+          type: "paragraph",
+          text: "El bucle for se usa cuando ya sabes de antemano cuántas veces quieres repetir. Su sintaxis se divide en tres partes, separadas por punto y coma, y cada una tiene un trabajo específico:",
+        },
+        {
+          type: "info",
+          title: "Las tres partes de un for",
+          items: [
+            "Inicio: let i = 1 crea el contador y fija su valor inicial.",
+            "Condición: i <= 3 decide si el bucle sigue repitiéndose.",
+            "Actualización: i++ aumenta el contador en 1 al terminar cada vuelta.",
+          ],
         },
         {
           type: "code",
@@ -341,12 +354,20 @@ if (nota >= 9) {
           lines: ["1", "2", "3"],
         },
         {
+          type: "paragraph",
+          text: "El programa sigue esta rutina: empieza con i = 1 y comprueba que 1 <= 3 sea verdadero; si lo es, ejecuta el bloque (muestra 1) y luego actualiza el contador con i++ (i pasa a 2). Repite con 2 y después con 3. Cuando i llega a 4, la condición 4 <= 3 es falsa y el bucle termina.",
+        },
+        {
           type: "heading",
           text: "Repetir con while",
         },
         {
           type: "paragraph",
-          text: "El bucle while repite mientras una condición sea verdadera. Hay que actualizar el contador dentro del bloque para que el bucle pueda terminar.",
+          text: "El bucle while se usa cuando no sabes cuántas vueltas harán falta de antemano: repite mientras una condición siga siendo verdadera. A diferencia de for, aquí no hay tres partes separadas por punto y coma: solo se evalúa una condición.",
+        },
+        {
+          type: "paragraph",
+          text: "Hazle caso a una diferencia importante: el while no actualiza el contador por ti. Por eso dentro del bloque se escribe contador++, para que el valor cambie cada vuelta y la condición pueda volverse falsa en algún momento.",
         },
         {
           type: "code",
@@ -363,12 +384,16 @@ while (contador <= 3) {
           lines: ["1", "2", "3"],
         },
         {
+          type: "paragraph",
+          text: "El contador empieza en 1 y el while comprueba la condición antes de cada vuelta. Si nunca cambiaras contador, la condición siempre sería verdadera y el bucle quedaría repitiéndose para siempre: eso es un bucle infinito.",
+        },
+        {
           type: "info",
           items: [
-            "for repite un número de veces definido por el contador.",
-            "while repite mientras la condición sea verdadera.",
-            "Una condición que nunca se vuelve falsa genera un bucle infinito.",
-            "El bucle es útil para procesar listas de datos.",
+            "for repite un número de veces conocido de antemano.",
+            "while repite mientras una condición siga siendo verdadera.",
+            "Si un contador nunca cambia, el bucle nunca termina.",
+            "El bucle es ideal para procesar listas de datos.",
           ],
         },
       ],
